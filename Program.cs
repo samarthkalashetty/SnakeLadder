@@ -2,26 +2,28 @@
 
 namespace SnakeAndLadderGame
 {
-    class UC5
+    class UC6
     {
         static void Main(string[] args)
         {
-            int playerPosition = 0;
-            int diceRollCount = 0;
+            int[] playerPositions = new int[2];
+            int[] diceRollCounts = new int[2];
+            bool[] ladderRollAgain = new bool[2];
             bool gameOver = false;
             Random random = new Random();
 
             Console.WriteLine("Welcome to Snake and Ladder Game!");
 
+            int currentPlayer = 0; // Start with player 0
             while (!gameOver)
             {
-                Console.WriteLine($"You are currently at position {playerPosition}");
+                Console.WriteLine($"Player {currentPlayer + 1}, you are currently at position {playerPositions[currentPlayer]}");
 
                 Console.Write("Press Enter to roll the dice...");
                 Console.ReadLine();
 
                 int diceRoll = random.Next(1, 7); // Simulate dice roll (1 to 6)
-                diceRollCount++;
+                diceRollCounts[currentPlayer]++;
                 Console.WriteLine($"You rolled a {diceRoll}");
 
                 int option = random.Next(0, 3); // Simulate option (0: No Play, 1: Ladder, 2: Snake)
@@ -33,28 +35,35 @@ namespace SnakeAndLadderGame
                         break;
                     case 1:
                         Console.WriteLine($"Ladder! Move ahead by {diceRoll} positions.");
-                        if (playerPosition + diceRoll <= 100)
-                            playerPosition += diceRoll;
+                        if (playerPositions[currentPlayer] + diceRoll <= 100)
+                        {
+                            playerPositions[currentPlayer] += diceRoll;
+                            ladderRollAgain[currentPlayer] = true; // Player gets another turn
+                        }
                         break;
                     case 2:
                         Console.WriteLine($"Snake! Move back by {diceRoll} positions.");
-                        playerPosition -= diceRoll;
-                        if (playerPosition < 0)
-                            playerPosition = 0; // Restart from position 0 if position goes below 0
+                        playerPositions[currentPlayer] -= diceRoll;
+                        if (playerPositions[currentPlayer] < 0)
+                            playerPositions[currentPlayer] = 0; // Restart from position 0 if position goes below 0
                         break;
                 }
 
                 // Snake and ladder rules...
                 // (same as previous implementation)
 
-                Console.WriteLine($"Current position: {playerPosition}");
+                Console.WriteLine($"Player {currentPlayer + 1}, current position: {playerPositions[currentPlayer]}");
 
-                if (playerPosition == 100)
+                if (playerPositions[currentPlayer] == 100)
                 {
-                    Console.WriteLine("Congratulations! You reached the top.");
-                    Console.WriteLine($"Total dice rolls to win: {diceRollCount}");
+                    Console.WriteLine($"Player {currentPlayer + 1} won the game with {diceRollCounts[currentPlayer]} dice rolls.");
                     gameOver = true;
                 }
+
+                if (!ladderRollAgain[currentPlayer])
+                    currentPlayer = (currentPlayer + 1) % 2; // Switch to the other player's turn
+
+                ladderRollAgain[currentPlayer] = false; // Reset ladder roll again flag
             }
 
             Console.WriteLine("Game Over. Thank you for playing!");
