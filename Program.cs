@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace SnakeAndLadderGame
+﻿namespace SnakeAndLadderGame
 {
-    class UC3
+    class UC4
     {
         static void Main(string[] args)
         {
@@ -31,7 +29,8 @@ namespace SnakeAndLadderGame
                         break;
                     case 1:
                         Console.WriteLine($"Ladder! Move ahead by {diceRoll} positions.");
-                        playerPosition += diceRoll;
+                        if (playerPosition + diceRoll <= 100)
+                            playerPosition += diceRoll;
                         break;
                     case 2:
                         Console.WriteLine($"Snake! Move back by {diceRoll} positions.");
@@ -44,7 +43,7 @@ namespace SnakeAndLadderGame
                 // Snake and ladder rules...
                 // (same as previous implementation)
 
-                if (playerPosition >= 100)
+                if (playerPosition == 100)
                 {
                     Console.WriteLine("Congratulations! You reached the top.");
                     gameOver = true;
