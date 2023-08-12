@@ -2,7 +2,7 @@
 
 namespace SnakeAndLadderGame
 {
-    class UC2
+    class UC3
     {
         static void Main(string[] args)
         {
@@ -37,7 +37,7 @@ namespace SnakeAndLadderGame
                         Console.WriteLine($"Snake! Move back by {diceRoll} positions.");
                         playerPosition -= diceRoll;
                         if (playerPosition < 0)
-                            playerPosition = 0; // Ensure the player doesn't go below position 0
+                            playerPosition = 0; // Restart from position 0 if position goes below 0
                         break;
                 }
 
