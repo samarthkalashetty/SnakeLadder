@@ -2,7 +2,7 @@
 
 namespace SnakeAndLadderGame
 {
-    class UC1
+    class UC2
     {
         static void Main(string[] args)
         {
@@ -22,7 +22,24 @@ namespace SnakeAndLadderGame
                 int diceRoll = random.Next(1, 7); // Simulate dice roll (1 to 6)
                 Console.WriteLine($"You rolled a {diceRoll}");
 
-                playerPosition += diceRoll;
+                int option = random.Next(0, 3); // Simulate option (0: No Play, 1: Ladder, 2: Snake)
+
+                switch (option)
+                {
+                    case 0:
+                        Console.WriteLine("No Play - Stay in the same position.");
+                        break;
+                    case 1:
+                        Console.WriteLine($"Ladder! Move ahead by {diceRoll} positions.");
+                        playerPosition += diceRoll;
+                        break;
+                    case 2:
+                        Console.WriteLine($"Snake! Move back by {diceRoll} positions.");
+                        playerPosition -= diceRoll;
+                        if (playerPosition < 0)
+                            playerPosition = 0; // Ensure the player doesn't go below position 0
+                        break;
+                }
 
                 // Snake and ladder rules...
                 // (same as previous implementation)
